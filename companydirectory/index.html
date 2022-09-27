@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jack Logan portfolio project - Company Directory">
+
+    <title>Company Directory</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./public/imgs/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./public/imgs/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./public/imgs/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./public/imgs/favicon/site.webmanifest">
+
+    <link rel="stylesheet" href="./public/css/styles.css">
+    <link rel="stylesheet" href="./libs/css/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./libs/css/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="./libs/css/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="./node_modules/normalize.css/normalize.css">
+  </head>
+
+
+  <body class="bg-light w-100">
+    <div id="preloader"></div>
+
+    <!-- Header -->
+    <header class="navbar navbar-dark bg-dark text-light">
+      <div class="d-flex container-fluid">
+        <h1 class="navbar-brand mb-0 h1 me-auto d-none d-sm-block" aria-roledescription="Company Directory"><a href="#" class="link-unstyled">Company Directory</a></h1>
+        <form class="input-group me-2" id="search-bar">
+          <input type="search" id="search-input" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+          <button type="button" class="btn btn-warning input-group-append" id="search-btn" data-container="body" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Search" aria-label="Search button"><i class="fa-solid fa-search"></i></button>
+        </form>
+        <div data-container="body" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add data">
+          <button type="button" class="btn btn-warning add-data" id="add-data-btn" data-bs-toggle="modal" data-bs-target="#add-data" aria-label="Add data"><i class="fa-solid fa-plus"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Nav tabs -->
+      <nav> 
+        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+          <button class="nav-link text-dark active" id="nav-personnel-tab" data-bs-toggle="tab" data-bs-target="#nav-personnel" type="button" role="tab" aria-controls="nav-personnel" aria-selected="true">Personnel</button>
+          <button class="nav-link text-dark" id="nav-department-tab" data-bs-toggle="tab" data-bs-target="#nav-department" type="button" role="tab" aria-controls="nav-department" aria-selected="false">Departments</button>
+          <button class="nav-link text-dark" id="nav-location-tab" data-bs-toggle="tab" data-bs-target="#nav-location" type="button" role="tab" aria-controls="nav-location" aria-selected="false">Locations</button>
+        </div>
+      </nav>
+
+      <!-- Main content container -->
+      <div class="container-fluid p-3 h-100 overflow-scroll">
+        <div class="tab-content" id="nav-tabContent">
+          
+          <!-- Personnel -->
+          <div class="tab-pane fade show active" role="tabpanel" id="nav-personnel" aria-labelledby="nav-personnel-tab" tabindex="0">
+            <div class="d-inline-flex flex-wrap justify-content-around" id="nav-personnel-content">
+              <p class="no-results">No results!</p>
+              <!-- Each personnel inserted from DB here -->
+            </div>
+          </div>
+
+          <!-- Departments -->
+          <div class="tab-pane fade" role="tabpanel" id="nav-department" aria-labelledby="nav-department-tab" tabindex="0">
+            <div class="d-inline-flex flex-wrap justify-content-around" id="nav-department-content">
+              <p class="no-results">No results!</p>
+              <!-- Each department inserted from DB here -->
+            </div>
+          </div>
+          
+          <!-- Locations -->
+          <div class="tab-pane fade" role="tabpanel" id="nav-location" aria-labelledby="nav-location-tab" tabindex="0">
+            <div class="d-inline-flex flex-wrap justify-content-around" id="nav-location-content">
+              <p class="no-results">No results!</p>
+              <!-- Each location inserted here from DB -->
+            </div>
+          </div>
+
+      </div>
+
+      <!-- Add data modal -->
+      <div class="modal fade add-data" id="add-data" tab-index="-1" aria-labelledby="add-data-label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form class="needs-validation" id="add-data-form" novalidate>
+              <div class="modal-header">
+                <h4 class="modal-title" id="add-data-label">Add data</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="add-data-buttons">
+                
+                <!-- User selects data type they want to add -->
+                <nav>
+                  <div class="nav nav-pills justify-content-center p-3" id="nav-tab" role="tablist">
+                    <button class="nav-link personnel-pill" id="modal-personnel-tab" data-bs-toggle="tab" data-bs-target="#modal-personnel" type="button" role="tab" aria-controls="modal-personnel">Personnel</button>
+                    <button class="nav-link department-pill" id="modal-department-tab" data-bs-toggle="tab" data-bs-target="#modal-department" type="button" role="tab" aria-controls="modal-department">Departments</button>
+                    <button class="nav-link location-pill" id="modal-location-tab" data-bs-toggle="tab" data-bs-target="#modal-location" type="button" role="tab" aria-controls="modal-location">Locations</button>
+                    <span id="current-modal" class=""></span>
+                  </div>
+                </nav>
+
+                <div class="container" id="add-data-container">                
+                  <div class="tab-content" id="nav-modalContent">
+                    <!-- Personnel -->
+                    <div class="tab-pane fade pb-3" id="modal-personnel" role="tabpanel" aria-labelledby="modal-personnel-tab" tabindex="0">
+                      <div class="row p-2">
+                        <div class="col-6">
+                          <label for="add-personnel-fname" class="form-label">First name</label>
+                          <input type="text" id="add-personnel-fname" class="form-control form-control-personnel validate" aria-required="true" required>
+                          <div class="invalid-feedback">
+                            Please provide a first name.
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <label for="add-personnel-lname" class="form-label">Last name</label>
+                          <input type="text" id="add-personnel-lname" class="form-control form-control-personnel validate" aria-required="true" required>
+                          <div class="invalid-feedback">
+                            Please provide a second name.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row p-2">
+                        <div class="col-6">
+                          <label for="add-personnel-dept" class="form-label">Department</label>
+                          <select id="add-personnel-dept" name="add-personnel-dept" class="form-control form-control-personnel validate" aria-required="true" required></select>
+                          <div class="invalid-feedback">
+                            Please select a department. If the correct department does not exist, please ensure to add it first.
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <label for="add-personnel-location" class="form-label">Location</label>
+                          <select id="add-personnel-location" name="add-personnel-location" class="form-control form-control-personnel validate" required disabled></select>
+                        </div>
+                      </div>
+                      <div class="row p-2">
+                        <div class="col-12">
+                          <label for="add-personnel-email" class="form-label">Email</label>
+                          <input type="email" id="add-personnel-email" class="form-control form-control-personnel validate" aria-required="true" required>
+                          <div class="invalid-feedback">
+                            Please provide a valid email address.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                    <!-- Departments -->
+                    <div class="tab-pane fade pb-3" id="modal-department" role="tabpanel" aria-labelledby="modal-department-tab" tabindex="0">
+                      <div class="row p-2">
+                        <div class="col-6">
+                          <label for="add-department-name" class="form-label">Department name</label>
+                          <input type="text" id="add-department-name" class="form-control form-control-departments validate" aria-required="true" required>
+                          <div class="invalid-feedback">
+                            Please enter a department name.
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <label for="add-department-location" class="form-label">Location</label>
+                          <select id="add-department-location" name="add-department-location" class="form-control form-control-departments validate" aria-required="true" required></select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Locations -->
+                    <div class="tab-pane fade pb-3" id="modal-location" role="tabpanel" aria-labelledby="modal-location-tab" tabindex="0">
+                      <div class="row p-2">
+                        <div class="col-12">
+                          <label for="add-location-name" class="form-label">City</label>
+                          <input type="text" id="add-location-name" class="form-control form-control-locations validate" aria-required="true" required>
+                          <div class="invalid-feedback">
+                            Please enter a location name.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" id="add-to-db" class="btn btn-warning">Add</button>
+              <button type="button" id="create-cancel-btn" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="create-success-btn" aria-hidden="true" aria-labelledby="create-success" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="create-success">Success</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p id="create-success-error-msg"><span id="create-success-msg"></span> successfully added!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="create-success-close" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- /////////// UPDATE data /////////// -->
+    <!-- Update Personnel modal -->
+    <div class="modal fade" id="edit-personnel-modal" tabindex="-1" aria-labelledby="edit-personnel-modal-title" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form class="needs-validation" id="edit-personnel-form" novalidate>
+            <div class="modal-header">
+              <h5 class="modal-title" id="edit-personnel-modal-title">Update personnel</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row p-2">
+                <div class="col-12 edit-personnel-parent-div">
+                  <div class="row p-2">
+                    <div class="col-6">
+                      <label for="edit-personnel-fname" class="form-label">First name</label>
+                      <input type="text" id="edit-personnel-fname" class="form-control validate" aria-required="true" required>
+                      <div class="invalid-feedback">
+                        First name is required.
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <label for="edit-personnel-lname" class="form-label">Last name</label>
+                      <input type="text" id="edit-personnel-lname" class="form-control validate" aria-required="true" required>
+                      <div class="invalid-feedback">
+                        Last name is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row p-2">
+                    <div class="col-6">
+                      <label for="edit-personnel-dept" class="form-label">Department</label>
+                      <select id="edit-personnel-dept" name="edit-personnel-dept" class="form-control" aria-required="true" required></select>
+                    </div>
+                    <div class="col-6">
+                      <label for="edit-personnel-location" class="form-label">Location</label>
+                      <input id="edit-personnel-location" name="edit-personnel-location" class="form-control" required disabled></input>
+                    </div>
+                  </div>
+                  <div class="row p-2">
+                    <div class="col-12">
+                      <label for="edit-personnel-email" class="form-label">Email</label>
+                      <input type="email" id="edit-personnel-email" class="form-control" aria-required="true" required>
+                      <div class="invalid-feedback">
+                        Email is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-warning" id="save-edit-personnel" aria-hidden="true" tabindex="-1">Save changes</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="edit-personnel-success" aria-hidden="true" aria-labelledby="edit-personnel-success-title" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="edit-personnel-success-title">Success</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="edit-personnel-success-error">
+            Person updated!
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-warning" data-bs-dismiss="modal" id="edit-cancel-btn">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Update Department modal -->
+    <div class="modal fade" id="edit-department-modal" tabindex="-1" aria-labelledby="edit-department-modal-title" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form class="needs-validation" id="edit-department-form" novalidate>
+            <div class="modal-header">
+              <h5 class="modal-title" id="edit-department-modal-title">Update department</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row p-2">
+                <div class="col-6">
+                  <label for="edit-department-name" class="form-label validate" aria-required="true">Department name</label>
+                  <input type="text" id="edit-department-name" class="form-control input-edit-department" required>
+                  <div class="invalid-feedback">
+                    Department name is required.
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label for="edit-department-location" class="form-label">Location</label>
+                  <select id="edit-department-location" name="edit-department-location" class="form-control"></select>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-warning" id="save-edit-department" aria-hidden="true" tabindex="-1">Save changes</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="edit-department-success" aria-hidden="true" aria-labelledby="edit-department-success-title" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="edit-department-success-title">Success</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="edit-department-success-error">
+            Department updated!
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-warning" data-bs-dismiss="modal" id="edit-cancel-btn">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Update Location modal -->
+    <div class="modal fade" id="edit-location-modal" tabindex="-1" aria-labelledby="edit-location-modal-title" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form class="needs-validation" id="edit-location-form" novalidate>
+            <div class="modal-header">
+              <h5 class="modal-title" id="edit-location-modal-title">Update location</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row p-2">
+                <div class="col-12 edit-location-parent-div">
+                  <!-- Location added dynamically -->
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-warning" id="save-edit-location" aria-hidden="true" tabindex="-1">Save changes</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="edit-location-success" aria-hidden="true" aria-labelledby="edit-location-success-title" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="edit-location-success-title">Success</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="edit-location-success-error">
+            Location updated!
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-warning" data-bs-dismiss="modal" id="edit-cancel-btn">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- /////////// UPDATE data /////////// -->
+    <!-- Delete personnel modal  -->
+    <div class="modal fade" id="delete-personnel-modal" tabindex="-1" aria-labelledby="delete-personnel-modal-title" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delete-personnel-modal-title">Delete Person</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you would like to permanently delete <strong><span id="delete-first-name"></span> <span id="delete-last-name"></span></strong>'s record?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" id="save-delete-personnel" aria-hidden="true" data-bs-target="#delete-personnel-success" data-bs-toggle="modal" data-bs-dismiss="modal" tabindex="-1">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="delete-personnel-success" aria-hidden="true" aria-labelledby="delete-personnel-success-title" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delete-personnel-success-title">Success</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Person deleted!
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-warning" data-bs-dismiss="modal" id="delete-cancel-btn">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete department modal  -->
+    <div class="modal fade" id="delete-department-modal" tabindex="-1" aria-labelledby="delete-department-modal-title" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delete-department-modal-title">Delete Department</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you would like to permanently delete the <strong><span id="delete-department-name"></span></strong> department?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" id="save-delete-department" aria-hidden="true" data-bs-target="#delete-department-success" data-bs-toggle="modal" data-bs-dismiss="modal" tabindex="-1">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="delete-department-success" aria-hidden="true" aria-labelledby="delete-department-success-title" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delete-department-success-title">Success</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="delete-department-msg">
+            Department deleted!
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-warning" data-bs-dismiss="modal" id="delete-cancel-btn">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete location modal  -->
+    <div class="modal fade" id="delete-location-modal" tabindex="-1" aria-labelledby="delete-location-modal-title" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delete-location-modal-title">Delete Location</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you would like to permanently delete the <strong><span id="delete-location-name"></span></strong> location?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" id="save-delete-location" aria-hidden="true" data-bs-target="#delete-location-success" data-bs-toggle="modal" data-bs-dismiss="modal" tabindex="-1">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="delete-location-success" aria-hidden="true" aria-labelledby="delete-location-success-title" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delete-location-success-title">Success</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="delete-location-msg">
+            Location deleted!
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-warning" data-bs-dismiss="modal" id="delete-cancel-btn">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- End of main container -->
+  </div>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+    <script src="./libs/css/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+    <script src="./public/js/main.js"></script>
+  </body>
+</html>
