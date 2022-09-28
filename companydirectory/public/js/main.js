@@ -142,24 +142,25 @@ const locationContentCard = (id, name) => {
 window.onload = () => {
 
     $.ajax({
-        url: "./public/php/getAll.php",
+        url: "./public/python/getAll.py",
         dataType: "json",
         type: "GET",
 
         success: result => {
-            if (result.status.name == "ok") {
+            if (result.status_name == "ok") {
+                console.log("success!")
 
                 // Add Personnel to DOM
-                Object.entries(result.data).forEach(element => {
-                    const id = element[1]['id'];
-                    const lastName = element[1]['lastName'];
-                    const firstName = element[1]['firstName'];
-                    const email = element[1]['email'];
-                    const department = element[1]['department'];
-                    const location = element[1]['location'];
+                // Object.entries(result.data).forEach(element => {
+                //     const id = element[1]['id'];
+                //     const lastName = element[1]['lastName'];
+                //     const firstName = element[1]['firstName'];
+                //     const email = element[1]['email'];
+                //     const department = element[1]['department'];
+                //     const location = element[1]['location'];
 
-                    $("#nav-personnel-content").append(personnelContentCard(id, firstName, lastName, email, department, location));                    
-                });                
+                //     $("#nav-personnel-content").append(personnelContentCard(id, firstName, lastName, email, department, location));                    
+                // });                
             }
         },
         
@@ -170,7 +171,7 @@ window.onload = () => {
     
     // Add Departments to DOM
     $.ajax({
-        url: "./public/php/getAllDepartments.php",
+        url: "./public/python/getAllDepartments.py",
         type: "GET",
         dataType: "json",
 
@@ -202,7 +203,7 @@ window.onload = () => {
 
     // Add Locations to DOM
     $.ajax({
-        url: "./public/php/getAllLocations.php",
+        url: "./public/python/getAllLocations.py",
         type: "GET",
         dataType: "json",
 
@@ -294,7 +295,7 @@ $("#add-data-form").on("submit", (e) => {
         if ($("#add-data-form").hasClass("is-valid")) {
 
             $.ajax({
-                url: "./public/php/insertPersonnel.php",
+                url: "./public/python/insertPersonnel.py",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -333,7 +334,7 @@ $("#add-data-form").on("submit", (e) => {
         if ($("#add-data-form").hasClass("is-valid")) {
 
             $.ajax({
-                url: "./public/php/insertDepartment.php",
+                url: "./public/python/insertDepartment.py",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -370,7 +371,7 @@ $("#add-data-form").on("submit", (e) => {
         if ($("#add-data-form").hasClass("is-valid")) {
     
             $.ajax({
-                url: "./public/php/insertLocation.php",
+                url: "./public/python/insertLocation.py",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -406,7 +407,7 @@ $("#add-data-form").on("submit", (e) => {
 // Create modal -- add Location corresponding to Department
 $("#modal-personnel-tab").on('click', () => {
     $.ajax({
-        url: "./public/php/getDepartmentByID.php",
+        url: "./public/python/getDepartmentByID.py",
         dataType: "json",
         type: "GET",
         data: {
@@ -419,7 +420,7 @@ $("#modal-personnel-tab").on('click', () => {
 
                 $("#add-personnel-dept").on('change', () => {
                     $.ajax({
-                        url: "./public/php/getDepartmentByID.php",
+                        url: "./public/python/getDepartmentByID.py",
                         dataType: "json",
                         type: "GET",
                         data: {
@@ -460,7 +461,7 @@ $(document).on('click', '.edit-location', (e) => {
     locationID = parseInt(e.currentTarget.id.match(/\d+/g));
     
     $.ajax({
-        url: "./public/php/getLocationByID.php",
+        url: "./public/python/getLocationByID.py",
         type: "GET",
         dataType: "json",
         data: {
@@ -493,7 +494,7 @@ $("#edit-location-form").on("submit", (e) => {
 
     if ($("#edit-location-form").hasClass("is-valid")) {
         $.ajax({
-            url: "./public/php/updateLocation.php",
+            url: "./public/python/updateLocation.py",
             type: "POST",
             dataType: "json",
             data: {
@@ -532,7 +533,7 @@ $(document).on('click', '.edit-personnel', (e) => {
     personnelID = parseInt(e.currentTarget.id.match(/\d+/g));
 
     $.ajax({
-        url: "./public/php/getPersonnelByID.php",
+        url: "./public/python/getPersonnelByID.py",
         dataType: "json",
         type: "GET",
         data: {
@@ -558,7 +559,7 @@ $(document).on('click', '.edit-personnel', (e) => {
 // Edit personnel modal -- add Location corresponding to Department
 $("#edit-personnel-dept").on('change', () => {
     $.ajax({
-        url: "./public/php/getDepartmentByID.php",
+        url: "./public/python/getDepartmentByID.py",
         dataType: "json",
         type: "GET",
         data: {
@@ -584,7 +585,7 @@ $("#edit-personnel-form").on('submit', (e) => {
     if ($("#edit-personnel-form").hasClass("is-valid")) {
 
         $.ajax({
-            url: "./public/php/updatePersonnel.php",
+            url: "./public/python/updatePersonnel.py",
             dataType: "json",
             type: "POST",
             data: {
@@ -629,7 +630,7 @@ $(document).on('click', '.edit-department', (e) => {
     departmentID = parseInt(e.currentTarget.id.match(/\d+/g));
     
     $.ajax({
-        url: "./public/php/getDepartmentByID.php",
+        url: "./public/python/getDepartmentByID.py",
         dataType: "json",
         type: "GET",
         data: {
@@ -655,7 +656,7 @@ $("#edit-department-form").on('submit', (e) => {
 
     if ($("#edit-department-form").hasClass("is-valid")) {
         $.ajax({
-            url: "./public/php/updateDepartment.php",
+            url: "./public/python/updateDepartment.py",
             type: "POST",
             dataType: "json",
             data: {
@@ -699,7 +700,7 @@ $(document).on('click', '.delete-personnel', (e) => {
     deletePersonnelID = parseInt(e.currentTarget.id.match(/\d+/g));
 
     $.ajax({
-        url: "./public/php/getPersonnelByID.php",
+        url: "./public/python/getPersonnelByID.py",
         dataType: "json",
         type: "GET",
         data: {
@@ -721,7 +722,7 @@ $(document).on('click', '.delete-personnel', (e) => {
 
 $("#save-delete-personnel").on('click', () => {
     $.ajax({
-        url: "./public/php/deletePersonnelByID.php",
+        url: "./public/python/deletePersonnelByID.py",
         type: "POST",
         dataType: "json",
         data: {
@@ -751,7 +752,7 @@ $(document).on('click', '.delete-department', (e) => {
 
     // Check if department has dependencies
     $.ajax({
-        url: "./public/php/checkDepartmentDependencies.php",
+        url: "./public/python/checkDepartmentDependencies.py",
         dataType: "json",
         type: "GET",
         data: {
@@ -771,7 +772,7 @@ $(document).on('click', '.delete-department', (e) => {
 
                     // If no dependencies, retrieve department name and add to delete modal 
                     $.ajax({
-                        url: "./public/php/getDepartmentByID.php",
+                        url: "./public/python/getDepartmentByID.py",
                         dataType: "json",
                         type: "GET",
                         data: {
@@ -792,7 +793,7 @@ $(document).on('click', '.delete-department', (e) => {
                     $("#save-delete-department").on("click", () => {
                         
                         $.ajax({
-                            url: "./public/php/deleteDepartmentByID.php",
+                            url: "./public/python/deleteDepartmentByID.py",
                             type: "POST",
                             dataType: "json",
                             data: {
@@ -840,7 +841,7 @@ $(document).on('click', '.delete-location', (e) => {
     deleteLocationID = parseInt(e.currentTarget.id.match(/\d+/g));
 
     $.ajax({
-        url: "./public/php/checkLocationDependencies.php",
+        url: "./public/python/checkLocationDependencies.py",
         dataType: "json",
         type: "GET",
         data: {
@@ -859,7 +860,7 @@ $(document).on('click', '.delete-location', (e) => {
 
                 // if no dependencies add location name to delete modal
                 $.ajax({
-                    url: "./public/php/getLocationByID.php",
+                    url: "./public/python/getLocationByID.py",
                     dataType: "json",
                     type: "GET",
                     data: {
@@ -880,7 +881,7 @@ $(document).on('click', '.delete-location', (e) => {
                 $("#save-delete-location").on("click", () => {
 
                     $.ajax({
-                        url: "./public/php/deleteLocationByID.php",
+                        url: "./public/python/deleteLocationByID.py",
                         dataType: "json",
                         type: "POST",
                         data: {
@@ -932,7 +933,7 @@ $("#search-bar").on("keyup", (e) => {
     if ($("#nav-personnel-tab").hasClass("active")) {
 
         $.ajax({
-            url: "./public/php/searchPersonnel.php",
+            url: "./public/python/searchPersonnel.py",
             dataType: "json",
             type: "GET",
             data: {
@@ -974,7 +975,7 @@ $("#search-bar").on("keyup", (e) => {
     if ($("#nav-department-tab").hasClass("active")) {
 
         $.ajax({
-            url: "./public/php/searchDepartment.php",
+            url: "./public/python/searchDepartment.py",
             dataType: "json",
             type: "GET",
             data: {
@@ -1015,7 +1016,7 @@ $("#search-bar").on("keyup", (e) => {
     if ($("#nav-location-tab").hasClass("active")) {
 
         $.ajax({
-            url: "./public/php/searchLocation.php",
+            url: "./public/python/searchLocation.py",
             dataType: "json",
             type: "GET",
             data: {
